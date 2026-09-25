@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tony Jürgens · Tony’s Hangar — engineering portfolio</title>
+<meta name="description" content="Tony Jürgens — mechanical engineering student at TU Eindhoven focused on electric aviation and experimental aerodynamics. Wind tunnel design, force-balance calibration, flight hardware prototyping, CFD.">
+<link rel="canonical" href="https://tonyshangar.com/">
+<meta name="theme-color" content="#0e1013">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Tony’s Hangar">
+<meta property="og:url" content="https://tonyshangar.com/">
+<meta property="og:title" content="Tony Jürgens · Tony’s Hangar">
+<meta property="og:description" content="Mechanical engineering student at TU Eindhoven building hardware for electric aviation — a self-built wind tunnel, a six-component force balance, a cockpit panel for an electric Cessna 150, CFD.">
+<meta property="og:image" content="https://tonyshangar.com/assets/og-card.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Tony’s Hangar — Tony Jürgens, engineering portfolio">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preload" as="image" href="assets/hero.jpg">
+<link rel="stylesheet" href="styles.css">
+
+<script>
+  /* Runs before first paint: enables JS styling, and plays the hangar-door
+     intro once per visit (skipped for reduced motion and deep links). */
+  (function (d) {
+    d.classList.add('js');
+    try {
+      if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches &&
+          !location.hash && !sessionStorage.getItem('hangarOpen')) {
+        d.classList.add('doors-intro');
+      }
+    } catch (e) {}
+  })(document.documentElement);
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Tony Jürgens",
+  "url": "https://tonyshangar.com/",
+  "sameAs": ["https://www.linkedin.com/in/ttjuergens/"],
+  "jobTitle": "Mechanical engineering student",
+  "affiliation": { "@type": "CollegeOrUniversity", "name": "Eindhoven University of Technology" },
+  "knowsAbout": ["Electric aviation", "Experimental aerodynamics", "Wind tunnel testing", "Force balance calibration", "SolidWorks", "Computational fluid dynamics"]
+}
+</script>
+</head>
+<body>
+
+<a class="skip" href="#main">Skip to content</a>
+
+<nav class="nav" aria-label="Sections">
+  <div class="nav-inner">
+    <a class="brand" href="#top">
+      <svg class="brand-icon" viewBox="0 0 32 26" aria-hidden="true"><path d="M3 24.5V13.5a13 10.5 0 0 1 26 0v11" fill="none" stroke="currentColor" stroke-width="2.6"/><path d="M9.5 24.5V15h13v9.5z" fill="currentColor"/><path d="M16 15v9.5" stroke="#0e1013" stroke-width="1.4"/></svg>
+      <span>Tony’s Hangar</span>
+    </a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-links">
+      <span class="nt-label">Menu</span>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path class="nt-open" d="M3 6.5h18M3 12h18M3 17.5h18"/><path class="nt-close" d="M5 5l14 14M19 5 5 19"/></svg>
+    </button>
+    <div class="nav-links" id="nav-links">
+      <a href="#wind-tunnel"><span class="nl-bay">01</span>Wind tunnel</a>
+      <a href="#force-balance"><span class="nl-bay">02</span>Force balance</a>
+      <a href="#clearwings"><span class="nl-bay">03</span>Clearwings</a>
+      <a href="#cfd"><span class="nl-bay">04</span>CFD</a>
+      <a href="#skills"><span class="nl-bay" aria-hidden="true"></span>Toolbox</a>
+      <a href="#contact"><span class="nl-bay" aria-hidden="true"></span>Contact</a>
+    </div>
+  </div>
+  <div class="taxi" aria-hidden="true">
+    <div class="taxi-line"></div>
+    <svg class="taxi-plane" viewBox="0 0 24 24"><path transform="rotate(90 12 12)" d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5z"/></svg>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="hero-bg" aria-hidden="true"></div>
+  <div class="hero-lights" aria-hidden="true"></div>
+  <div class="hero-inner">
+    <p class="sign sign-loc">Welcome to Tony’s Hangar</p>
+    <h1>Tony Jürgens</h1>
+    <p class="tagline">Mechanical engineering student at TU Eindhoven — I design, build,
+    instrument and test hardware for electric aviation.</p>
+    <ul class="meta">
+      <li>BSc Mechanical Engineering · TU/e · 2025–2028</li>
+      <li>Eindhoven, Netherlands</li>
+      <li>Free to work across the EU &amp; US — no sponsorship needed</li>
+    </ul>
+    <div class="cta-row">
+      <a class="btn btn-yellow" href="mailto:juergenstangtang@gmail.com">Email me</a>
+      <a class="btn btn-ghost" href="https://www.linkedin.com/in/ttjuergens/" rel="me">LinkedIn</a>
+    </div>
+  </div>
+  <div class="doors" aria-hidden="true">
+    <div class="door door-l"><div class="door-paint"><span class="dp-main">Tony’s</span><span class="dp-sub">Eindhoven</span></div></div>
+    <div class="door door-r"><div class="door-paint"><span class="dp-main">Hangar</span><span class="dp-sub">EHEH</span></div></div>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ============ HANGAR DIRECTORY ============ -->
+  <section class="directory" aria-labelledby="dir-title">
+    <div class="wrap">
+      <h2 class="dir-title" id="dir-title">Hangar directory</h2>
+      <ol class="signs">
+        <li><a href="#wind-tunnel">
+          <span class="sg-bay">Bay 01</span>
+          <span class="sg-name">Wind tunnel</span>
+          <span class="sg-sub">Self-built, 4 m · 2023–25</span>
+          <svg class="sg-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v15m-7-7 7 7 7-7" fill="none" stroke="currentColor" stroke-width="3.2"/></svg>
+        </a></li>
+        <li><a href="#force-balance">
+          <span class="sg-bay">Bay 02</span>
+          <span class="sg-name">Force balance</span>
+          <span class="sg-sub">TU/e wind tunnel lab · 2026</span>
+          <svg class="sg-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v15m-7-7 7 7 7-7" fill="none" stroke="currentColor" stroke-width="3.2"/></svg>
+        </a></li>
+        <li><a href="#clearwings">
+          <span class="sg-bay">Bay 03</span>
+          <span class="sg-name">Cockpit panel</span>
+          <span class="sg-sub">Clearwings · electric Cessna 150</span>
+          <svg class="sg-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v15m-7-7 7 7 7-7" fill="none" stroke="currentColor" stroke-width="3.2"/></svg>
+        </a></li>
+        <li><a href="#cfd">
+          <span class="sg-bay">Bay 04</span>
+          <span class="sg-name">CFD cooling</span>
+          <span class="sg-sub">TU/e course project · 2026</span>
+          <svg class="sg-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v15m-7-7 7 7 7-7" fill="none" stroke="currentColor" stroke-width="3.2"/></svg>
+        </a></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ============ BAY 01 · WIND TUNNEL ============ -->
+  <section class="section light" id="wind-tunnel" aria-labelledby="wt-title">
+    <div class="wrap">
+      <header class="sec-head reveal">
+        <div class="bay-row">
+          <span class="bay">Bay <b>01</b></span>
+          <span class="status">Complete</span>
+        </div>
+        <p class="kicker">Independent project · Sep 2023 – Feb 2025</p>
+        <h2 id="wt-title">A 4-metre wind tunnel, built from scratch.</h2>
+        <p class="sec-lead">Designed in SolidWorks and built by hand in the school workshop: an
+        open-circuit low-speed tunnel with a 30 × 30 cm transparent test section, settling
+        chamber, flow straighteners and turbulence-reduction screens — built to measure how flap
+        deployment shifts the stall point of a Boeing 737-NG-style wing. Written up as my IB
+        Physics Extended Essay (graded B).</p>
+      </header>
+
+      <div class="bento">
+        <figure class="b6 reveal">
+          <img src="assets/wt-tunnel-full.jpg" alt="The assembled 4-metre plywood wind tunnel on a lab bench, with fan, diffuser, transparent test section and contraction section labelled" width="1600" height="664">
+          <figcaption>The assembled tunnel: fan → diffuser → 30 × 30 cm test section → 8:1 contraction (annotated figure from the project report).</figcaption>
+        </figure>
+        <figure class="b2 h-tall reveal" style="--d:.05s">
+          <img src="assets/wt-build.jpg" alt="Plywood contraction section under construction in the school workshop" width="986" height="1430" loading="lazy">
+          <figcaption>Building the plywood contraction section.</figcaption>
+        </figure>
+        <figure class="b4 h-tall reveal" style="--d:.1s">
+          <img src="assets/wt-test-section.jpg" alt="Transparent test section opened up, with the white airfoil mounted on its support inside" width="1600" height="1200" loading="lazy">
+          <figcaption>The test section with the airfoil mounted on the 2-axis force balance.</figcaption>
+        </figure>
+        <figure class="b3 h-med reveal">
+          <img src="assets/wt-airfoil.jpg" alt="White 3D-printed Boeing 737-NG airfoil section held in a hand" width="815" height="611" loading="lazy">
+          <figcaption>3D-printed 737-NG airfoil with interchangeable flap sets (0° / 20° / 40°).</figcaption>
+        </figure>
+        <figure class="b3 h-med reveal" style="--d:.05s">
+          <img src="assets/wt-sketch.jpg" alt="Hand-drawn dimensioned design sketch of the wind tunnel on graph paper" width="940" height="425" loading="lazy">
+          <figcaption>Early design sketch — sizing the contraction, test chamber and diffuser before CAD.</figcaption>
+        </figure>
+      </div>
+
+      <div class="plate reveal">
+        <p class="plate-head"><span>Data plate</span><span>Wind tunnel · 2024</span></p>
+        <dl class="plate-grid">
+          <div>
+            <dt>Critical angle of attack, clean → full flaps</dt>
+            <dd>15°&hairsp;→&hairsp;25°</dd>
+          </div>
+          <div>
+            <dt>Peak-lift gain with full flaps</dt>
+            <dd>~20&thinsp;%</dd>
+          </div>
+          <div>
+            <dt>Contraction ratio · 35&nbsp;km/h test section</dt>
+            <dd>8:1</dd>
+          </div>
+          <div>
+            <dt>Force resolution, self-built 2-axis balance</dt>
+            <dd>±1&thinsp;g</dd>
+          </div>
+        </dl>
+      </div>
+
+      <div class="log reveal">
+        <div class="log-item">
+          <h3>Instrumentation, built and programmed myself</h3>
+          <p>A 2-axis force balance (lift + drag) from two HX711-amplified load cells read by an
+          Arduino Nano (C++), with a motorised angle-of-attack drive — calibrated against known
+          masses before every configuration change.</p>
+        </div>
+        <div class="log-item">
+          <h3>A real test campaign</h3>
+          <p>Interchangeable flaps at 0°/20°/40° replicating cruise, take-off and landing; angle
+          of attack swept 0–25°, three trials per configuration, ~70–90 data points per run;
+          stall angles cross-checked on video.</p>
+        </div>
+        <div class="log-item">
+          <h3>Results that match the literature</h3>
+          <p>The critical angle of attack moved from ~15° (clean) to ~20° (20° flaps) and ~25°
+          (full flaps), with ~20% higher peak lift — consistent with published NASA/AIAA data
+          across a ~30-source literature review.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ STORY · FROM MY BUILD TO TU/e ============ -->
+  <section class="story" aria-label="From my own wind tunnel to the TU/e wind tunnel lab">
+    <div class="story-pin">
+      <img class="story-img img-diy" src="assets/t-diy.jpg" alt="Looking down the inside of the self-built plywood wind tunnel towards its fan" width="1328" height="1044" loading="lazy">
+      <img class="story-img img-tue" src="assets/t-tue.jpg" alt="Looking down the inside of the TU Eindhoven wind tunnel towards its fan wall" width="1440" height="1080" loading="lazy">
+      <div class="story-shade" aria-hidden="true"></div>
+      <div class="story-cap cap-a">
+        <p class="story-kicker">2023 · School workshop</p>
+        <h3>It started with plywood and a fan.</h3>
+        <p>My own 4-metre tunnel — designed in SolidWorks, built by hand, instrumented with an Arduino.</p>
+      </div>
+      <div class="story-cap cap-b">
+        <p class="story-kicker">2026 · TU Eindhoven</p>
+        <h3>Now it’s the university’s tunnel.</h3>
+        <p>Research assistant in the TU/e Wind Tunnel Laboratory — supporting experiments and
+        bringing a six-component force balance back into service.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ BAY 02 · TNO FORCE BALANCE ============ -->
+  <section class="section light-alt" id="force-balance" aria-labelledby="fb-title">
+    <div class="wrap">
+      <header class="sec-head reveal">
+        <div class="bay-row">
+          <span class="bay">Bay <b>02</b></span>
+          <span class="status status-work">In work</span>
+        </div>
+        <p class="kicker">TU/e Wind Tunnel Laboratory · Jan 2026 – present</p>
+        <h2 id="fb-title">Recommissioning a <span class="nowrap">six-component</span> force balance.</h2>
+        <p class="sec-lead">Returning a 1995 TNO six-component force balance to measurement
+        service in the TU/e wind tunnel lab, paired with a modern HBM QuantumX MX430B
+        data-acquisition system.</p>
+      </header>
+
+      <div class="bento">
+        <figure class="b4 h-tall reveal">
+          <img src="assets/fb-frame.jpg" alt="The TNO six-component force balance frame on a workbench with load cells and cabling" width="1600" height="1200" loading="lazy">
+          <figcaption>The 1995 TNO balance during recommissioning.</figcaption>
+        </figure>
+        <figure class="b2 h-tall reveal" style="--d:.05s">
+          <img src="assets/fb-loadcell.jpg" alt="Close-up of one of the balance's cylindrical load cells mounted in the frame" width="1600" height="1200" loading="lazy">
+          <figcaption>One of the balance’s load cells.</figcaption>
+        </figure>
+      </div>
+
+      <div class="log reveal">
+        <div class="log-item">
+          <h3>Found the fault</h3>
+          <p>Diagnosed a systematic 50% sensitivity error in the load-cell chain through
+          structured electrical, mechanical and software troubleshooting.</p>
+        </div>
+        <div class="log-item">
+          <h3>Calibrated it properly</h3>
+          <p>Designed and executed a 43-run calibration campaign following NASA-published
+          balance-calibration methodology, using lab-grade masses.</p>
+        </div>
+        <div class="log-item">
+          <h3>Analysis under way</h3>
+          <p>Least-squares calibration-matrix fit in Python; accuracy figures and the formal
+          calibration report are in progress.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ BAY 03 · CLEARWINGS ============ -->
+  <section class="section dark" id="clearwings" aria-labelledby="cw-title">
+    <div class="wrap">
+      <header class="sec-head reveal">
+        <div class="bay-row">
+          <span class="bay">Bay <b>03</b></span>
+          <span class="status status-work">Installed · pre-first-flight</span>
+        </div>
+        <p class="kicker">Clearwings, Eindhoven · Mechanical engineering intern · Sep 2025 – present</p>
+        <h2 id="cw-title">A cockpit panel for an electric-aircraft retrofit.</h2>
+        <p class="sec-lead">Clearwings develops electric retrofit systems that convert existing
+        aircraft to battery-electric propulsion. I redesigned the Cessna 150 cockpit panel to
+        host the new electric-propulsion avionics, ahead of the company’s first experimental
+        flight — from 3D scan to flight-ready aluminium hardware, within sub-millimetre
+        tolerances, across 5+ prototypes.</p>
+      </header>
+
+      <div class="bento process">
+        <figure class="b6 reveal">
+          <img src="assets/cw-aircraft.jpg" alt="The all-electric Cessna 150 PH-TUE in Clearwings livery taxiing at Kempen Airport" width="1600" height="800" loading="lazy">
+          <figcaption>The aircraft my panel flies in: the all-electric Cessna 150 (PH-TUE) during its first public taxi test, Kempen Airport, March 2025. Photo: Clearwings / Rutger van Loo.</figcaption>
+        </figure>
+        <figure class="b2 h-med reveal">
+          <img src="assets/cw-prototype.jpg" alt="A blue 3D-printed prototype of part of the cockpit panel held in a hand" width="1600" height="1200" loading="lazy">
+          <figcaption><span class="step">01 · Prototype</span>An early 3D-printed prototype of the panel geometry.</figcaption>
+        </figure>
+        <figure class="b2 h-med reveal" style="--d:.05s">
+          <img src="assets/cw-display.jpg" alt="The redesigned black panel with a display fitted, lying on a desk" width="1600" height="1200" loading="lazy">
+          <figcaption><span class="step">02 · Build &amp; integrate</span>The redesigned panel with one of the new electric-propulsion displays fitted.</figcaption>
+        </figure>
+        <figure class="b2 h-med reveal" style="--d:.1s">
+          <img src="assets/cw-installed.jpg" alt="The new panel with displays and controls installed in the Cessna 150 cockpit" width="1600" height="1200" loading="lazy">
+          <figcaption><span class="step">03 · Install</span>Installed in the Cessna 150, ahead of the first experimental flight.</figcaption>
+        </figure>
+      </div>
+
+      <div class="log reveal">
+        <div class="log-item">
+          <h3>Reverse engineering</h3>
+          <p>Recovered missing CAD geometry by 3D-scanning the existing cockpit and rebuilding
+          it in SolidWorks.</p>
+        </div>
+        <div class="log-item">
+          <h3>Flight-ready hardware</h3>
+          <p>Delivered the panel as a flight-ready component within sub-millimetre
+          tolerances.</p>
+        </div>
+        <div class="log-item">
+          <h3>Iteration under changing requirements</h3>
+          <p>5+ aluminium prototypes to resolve mounting and alignment issues, integrating the
+          new displays and controls for a repeatable installation on the aircraft.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ BAY 04 · CFD ============ -->
+  <section class="section light" id="cfd" aria-labelledby="cfd-title">
+    <div class="wrap">
+      <header class="sec-head reveal">
+        <div class="bay-row">
+          <span class="bay">Bay <b>04</b></span>
+          <span class="status">Complete · group project</span>
+        </div>
+        <p class="kicker">TU/e 4RC30 Introduction to CFD (elective) · Team of 3 · 2026</p>
+        <h2 id="cfd-title">CFD thermal management of electronics in a cooling channel.</h2>
+        <p class="sec-lead">Course project simulating three heat-generating electronic components
+        in a 2D turbulent air cooling channel (Re 10,000–20,000) with a transient SIMPLE
+        finite-volume solver, standard k-ε turbulence with wall functions, and conjugate heat
+        transfer.</p>
+      </header>
+
+      <figure class="figure-card reveal">
+        <img src="assets/cfd-temp-field.png" alt="Simulated temperature field in the cooling channel showing three hot aluminium components and their thermal wakes" width="1126" height="278" loading="lazy">
+        <figcaption>Conjugate heat-transfer temperature field around the three aluminium components (figure from our group report).</figcaption>
+      </figure>
+
+      <div class="log reveal">
+        <div class="log-item">
+          <h3>Modelling</h3>
+          <p>Two-stage approach — volumetric heat-source model first, then conjugate heat
+          transfer with flow blockage, no-slip component surfaces and internal conduction in the
+          aluminium parts; verified with grid-sensitivity studies and mass/energy balance checks
+          (imbalances below 0.03%).</p>
+        </div>
+        <div class="log-item">
+          <h3>Group findings</h3>
+          <p>Raising inlet velocity from 0.5 to 2.0 m/s cut the hot-spot temperature by ~71 K at
+          a ~6× pressure-drop penalty; staggered component layouts reduced peak temperature by up
+          to ~22 K.</p>
+        </div>
+        <div class="log-item">
+          <h3>My credited role</h3>
+          <p>Running additional simulations, generating several of the result figures, and report
+          integration (symbols list, assembly, editing). Solver development was led by a
+          teammate.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ TOOLBOX ============ -->
+  <section class="section light-alt toolbox" id="skills" aria-labelledby="skills-title">
+    <div class="wrap">
+      <header class="sec-head reveal">
+        <p class="kicker">Tool chest</p>
+        <h2 id="skills-title">Toolbox</h2>
+      </header>
+      <dl class="chest reveal">
+        <div class="drawer">
+          <dt>CAD &amp; design</dt>
+          <dd>SolidWorks · Siemens NX · Catia V5 · Onshape</dd>
+        </div>
+        <div class="drawer">
+          <dt>Test &amp; instrumentation</dt>
+          <dd>Load cells &amp; strain-gauge bridges · HBM QuantumX / catmanEasy · calibration methodology · Arduino DAQ</dd>
+        </div>
+        <div class="drawer">
+          <dt>Prototyping &amp; manufacturing</dt>
+          <dd>Aluminium fabrication · FDM 3D printing · workshop build (wood / acrylic) · fit &amp; tolerancing</dd>
+        </div>
+        <div class="drawer">
+          <dt>Analysis &amp; programming</dt>
+          <dd>Python (NumPy / Pandas) · MATLAB · C/C++ (Arduino) · CFD coursework (FVM, SIMPLE, k-ε) · LaTeX</dd>
+        </div>
+        <div class="drawer">
+          <dt>Languages</dt>
+          <dd>English (native) · Mandarin (native) · German (native speaker — spoken) · Dutch (basic)</dd>
+        </div>
+      </dl>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer" id="contact">
+  <div class="hazard" aria-hidden="true"></div>
+  <div class="rbf" aria-hidden="true"><span>Remove before flight</span></div>
+  <div class="wrap">
+    <p class="sign sign-loc reveal">Contact tower</p>
+    <h2 class="footer-cta reveal">Open to aerospace internships in the EU and US.</h2>
+
+    <div class="board reveal" aria-hidden="true">
+      <div class="board-head">
+        <span><svg viewBox="0 0 24 24"><path transform="rotate(45 12 12)" d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5z"/></svg>Departures</span>
+        <span>EHEH</span>
+      </div>
+      <div class="board-row board-labels"><span class="c-flight">Flight</span><span class="c-dest">Destination</span><span class="c-status">Status</span></div>
+      <div class="board-row"><span class="c-flight flaps" data-width="5">TJ101</span><span class="c-dest flaps" data-width="6">EUROPE</span><span class="c-status flaps" data-width="8">BOARDING</span></div>
+      <div class="board-row"><span class="c-flight flaps" data-width="5">TJ102</span><span class="c-dest flaps" data-width="6">USA</span><span class="c-status flaps" data-width="8">BOARDING</span></div>
+    </div>
+    <p class="sr-only">Available now for aerospace internships in Europe and the USA.</p>
+
+    <div class="cta-row reveal">
+      <a class="btn btn-yellow" href="mailto:juergenstangtang@gmail.com">juergenstangtang@gmail.com</a>
+      <a class="btn btn-ghost" href="https://www.linkedin.com/in/ttjuergens/">LinkedIn</a>
+    </div>
+    <p class="footer-note">Tony’s Hangar · Eindhoven, Netherlands · Hand-built — plain HTML, CSS &amp; a little vanilla JS · © 2026 Tony Jürgens</p>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
