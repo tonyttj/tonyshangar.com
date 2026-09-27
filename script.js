@@ -1,206 +1,119 @@
-/* Tony’s Hangar — interactions. Vanilla JS, no dependencies.
-   Everything degrades gracefully: without JS the page is fully readable,
-   the story renders as a static two-photo sequence and the departures
-   board shows plain text. The hangar doors are pure CSS (see the inline
-   script in <head>); this file only remembers that they have opened. */
+/* tonyshangar.com — Rev. D. Small, dependency-free progressive enhancement.
+   Without JavaScript everything is visible and the marks are already drawn. */
 
 (function () {
   'use strict';
 
-  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var d = document;
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var hasIO = 'IntersectionObserver' in window;
 
-  /* the doors play once per visit */
-  try { sessionStorage.setItem('hangarOpen', '1'); } catch (e) {}
-
-  function clamp(v, a, b) { return Math.min(b, Math.max(a, v)); }
-  /* progress 0→1 across [a, b] */
-  function ramp(p, a, b) { return clamp((p - a) / (b - a), 0, 1); }
-
-  /* ---------- reveal on scroll ---------- */
-  (function () {
-    var items = document.querySelectorAll('.reveal');
-    if (reduceMotion || !('IntersectionObserver' in window)) {
-      items.forEach(function (el) { el.classList.add('in'); });
-      return;
-    }
-    var io = new IntersectionObserver(function (entries) {
+  /* 1. Quiet reveal — only for text blocks that start below the fold */
+  if (!reduce && hasIO) {
+    var blocks = d.querySelectorAll(
+      '.case-title, .case-lead, .specs, .notes, .index-list, .brief-list, .about-lead, .cv, .contact-title'
+    );
+    var vh = window.innerHeight;
+    var reveal = new IntersectionObserver(function (entries) {
       entries.forEach(function (e) {
-        if (e.isIntersecting) {
-          e.target.classList.add('in');
-          io.unobserve(e.target);
-        }
+        if (!e.isIntersecting) return;
+        e.target.classList.add('in');
+        reveal.unobserve(e.target);
       });
-    }, { threshold: 0.12, rootMargin: '1000% 0px -8% 0px' });
-    items.forEach(function (el) { io.observe(el); });
-  })();
-
-  /* ---------- nav: taxi-line progress + active bay ---------- */
-  (function () {
-    var nav = document.querySelector('.nav');
-    if (!nav) return;
-    var line = nav.querySelector('.taxi-line');
-    var plane = nav.querySelector('.taxi-plane');
-    var linkBox = nav.querySelector('.nav-links');
-    var links = [].slice.call(linkBox.querySelectorAll('a'));
-    var sections = links.map(function (a) {
-      return document.getElementById(a.getAttribute('href').slice(1));
-    });
-    var active = null;
-    var queued = false;
-
-    function setActive(a) {
-      if (a === active) return;
-      if (active) { active.classList.remove('active'); active.removeAttribute('aria-current'); }
-      active = a;
-      if (!a) return;
-      a.classList.add('active');
-      a.setAttribute('aria-current', 'location');
-      /* keep the active sign in view when the link row scrolls (phones) */
-      var box = linkBox.getBoundingClientRect();
-      var r = a.getBoundingClientRect();
-      if (r.left < box.left + 8 || r.right > box.right - 8) {
-        linkBox.scrollBy({ left: r.left - box.left - 24, behavior: reduceMotion ? 'auto' : 'smooth' });
-      }
-    }
-
-    /* phone menu */
-    var toggle = nav.querySelector('.nav-toggle');
-    function setOpen(open) {
-      nav.classList.toggle('open', open);
-      toggle.setAttribute('aria-expanded', String(open));
-      toggle.querySelector('.nt-label').textContent = open ? 'Close' : 'Menu';
-    }
-    if (toggle) {
-      toggle.addEventListener('click', function () { setOpen(!nav.classList.contains('open')); });
-      links.forEach(function (a) { a.addEventListener('click', function () { setOpen(false); }); });
-      document.addEventListener('keydown', function (e) {
-        if (e.key === 'Escape' && nav.classList.contains('open')) { setOpen(false); toggle.focus(); }
-      });
-      document.addEventListener('click', function (e) {
-        if (nav.classList.contains('open') && !nav.contains(e.target)) setOpen(false);
-      });
-    }
-
-    function update() {
-      queued = false;
-      var doc = document.documentElement;
-      var max = doc.scrollHeight - window.innerHeight;
-      var p = max > 0 ? clamp(window.scrollY / max, 0, 1) : 0;
-      line.style.transform = 'scaleX(' + p + ')';
-      plane.style.transform = 'translateX(' + p * (nav.clientWidth - 18) + 'px)';
-
-      var probe = window.innerHeight * 0.42;
-      var hit = null;
-      sections.forEach(function (s, i) {
-        if (!s) return;
-        var r = s.getBoundingClientRect();
-        if (r.top <= probe && r.bottom > probe) hit = links[i];
-      });
-      if (p > 0.995) hit = links[links.length - 1];
-      setActive(hit);
-    }
-
-    function queue() {
-      if (!queued) { queued = true; window.requestAnimationFrame(update); }
-    }
-    window.addEventListener('scroll', queue, { passive: true });
-    window.addEventListener('resize', queue);
-    update();
-  })();
-
-  /* ---------- pinned story: my build → TU/e tunnel ---------- */
-  (function () {
-    var story = document.querySelector('.story');
-    if (!story) return;
-    if (reduceMotion) { story.classList.add('static'); return; }
-
-    var imgA = story.querySelector('.img-diy');
-    var imgB = story.querySelector('.img-tue');
-    var capA = story.querySelector('.cap-a');
-    var capB = story.querySelector('.cap-b');
-    var queued = false;
-
-    function update() {
-      queued = false;
-      var rect = story.getBoundingClientRect();
-      var vh = window.innerHeight;
-      var total = rect.height - vh;
-      if (total <= 0) return;
-      var p = clamp(-rect.top / total, 0, 1);
-
-      /* crossfade window ~ middle of the scroll */
-      var x = ramp(p, 0.38, 0.58);
-      imgA.style.opacity = String(1 - x);
-      imgB.style.opacity = String(x);
-      /* continuous forward motion: fly toward the DIY fan, then on into the TU/e tunnel */
-      imgA.style.transform = 'scale(' + (1 + 0.18 * ramp(p, 0, 0.58)) + ')';
-      imgB.style.transform = 'scale(' + (1 + 0.15 * ramp(p, 0.38, 1)) + ')';
-
-      /* captions: A in early, out before the fade; B in after, hold to the end */
-      var aIn = ramp(p, 0.03, 0.13), aOut = 1 - ramp(p, 0.30, 0.40);
-      var bIn = ramp(p, 0.62, 0.74), bOut = 1 - ramp(p, 0.96, 1);
-      capA.style.opacity = String(Math.min(aIn, aOut));
-      capA.style.transform = 'translateY(' + (1 - aIn) * 26 + 'px)';
-      capB.style.opacity = String(Math.min(bIn, bOut));
-      capB.style.transform = 'translateY(' + (1 - bIn) * 26 + 'px)';
-    }
-
-    function queue() {
-      if (!queued) { queued = true; window.requestAnimationFrame(update); }
-    }
-    window.addEventListener('scroll', queue, { passive: true });
-    window.addEventListener('resize', queue);
-    update();
-  })();
-
-  /* ---------- split-flap departures board ---------- */
-  (function () {
-    var board = document.querySelector('.board');
-    if (!board) return;
-    var CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-    var NBSP = ' ';
-    var tiles = [];
-
-    board.querySelectorAll('.flaps').forEach(function (field) {
-      var text = field.textContent.trim();
-      var width = parseInt(field.getAttribute('data-width'), 10) || text.length;
-      field.textContent = '';
-      for (var i = 0; i < width; i++) {
-        var ch = text.charAt(i) || ' ';
-        var tile = document.createElement('span');
-        tile.className = 'flap';
-        tile.textContent = ch === ' ' ? NBSP : ch;
-        field.appendChild(tile);
-        tiles.push({ el: tile, ch: ch });
+    }, { rootMargin: '0px 0px -8% 0px' });
+    blocks.forEach(function (el) {
+      if (el.getBoundingClientRect().top > vh) {
+        el.classList.add('rv');
+        reveal.observe(el);
       }
     });
+  }
 
-    if (reduceMotion || !('IntersectionObserver' in window)) return;
+  /* 2. Hand-drawn marks draw themselves once they are in view */
+  if (!reduce && hasIO) {
+    var draw = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        var path = e.target.querySelector('path');
+        window.requestAnimationFrame(function () { path.style.strokeDashoffset = '0'; });
+        draw.unobserve(e.target);
+      });
+    }, { threshold: 0.9 });
+    d.querySelectorAll('.mark').forEach(function (mark) {
+      var path = mark.querySelector('path');
+      var len = Math.ceil(path.getTotalLength()) + 1;
+      path.style.strokeDasharray = len + ' ' + len;
+      path.style.strokeDashoffset = String(len);
+      mark.getBoundingClientRect(); /* commit the hidden state before transitions switch on */
+      mark.classList.add('is-armed');
+      draw.observe(mark);
+    });
+  }
 
-    tiles.forEach(function (t) { t.el.textContent = NBSP; });
+  /* 3. Header: out of the way when reading down, back when scrolling up */
+  var head = d.querySelector('.site-head');
+  if (head) {
+    var lastY = window.scrollY;
+    var queued = false;
+    window.addEventListener('scroll', function () {
+      if (queued) return;
+      queued = true;
+      window.requestAnimationFrame(function () {
+        var y = window.scrollY;
+        head.classList.toggle('is-scrolled', y > 8);
+        if (y > lastY + 6 && y > 240 && !head.contains(d.activeElement)) head.classList.add('is-hidden');
+        else if (y < lastY - 6 || y <= 240) head.classList.remove('is-hidden');
+        lastY = y;
+        queued = false;
+      });
+    }, { passive: true });
+    head.addEventListener('focusin', function () { head.classList.remove('is-hidden'); });
+  }
 
-    function flip(t, delay) {
-      var flips = t.ch === ' ' ? 0 : 6 + Math.floor(Math.random() * 10);
-      var n = 0;
-      setTimeout(function step() {
-        if (n < flips) {
-          t.el.textContent = CHARS.charAt(Math.floor(Math.random() * CHARS.length));
-          t.el.classList.remove('tick');
-          void t.el.offsetWidth; /* restart the tick animation */
-          t.el.classList.add('tick');
-          n++;
-          setTimeout(step, 55);
-        } else {
-          t.el.textContent = t.ch === ' ' ? NBSP : t.ch;
-        }
-      }, delay);
-    }
+  /* 4. Index: the preview slot follows whichever project you point at */
+  var slot = d.querySelector('.index-preview');
+  if (slot && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+    var imgs = slot.querySelectorAll('img');
+    var front = 0;
+    var current = imgs[0].getAttribute('src');
+    var links = d.querySelectorAll('.index-list a[data-preview]');
+    var warmed = false;
 
-    var io = new IntersectionObserver(function (entries) {
-      if (!entries[0].isIntersecting) return;
-      io.disconnect();
-      tiles.forEach(function (t, i) { flip(t, 250 + i * 32); });
-    }, { threshold: 0.6 });
-    io.observe(board);
-  })();
+    var warm = function () {
+      if (warmed) return;
+      warmed = true;
+      links.forEach(function (a) { new Image().src = a.getAttribute('data-preview'); });
+    };
+    var swap = function (back) {
+      back.classList.add('on');
+      imgs[front].classList.remove('on');
+      front = 1 - front;
+    };
+    var show = function (src) {
+      if (src === current) return;
+      current = src;
+      var back = imgs[1 - front];
+      if (back.getAttribute('src') === src && back.complete) { swap(back); return; }
+      back.onload = function () { if (current === src) swap(back); };
+      back.src = src;
+    };
+    links.forEach(function (a) {
+      var src = a.getAttribute('data-preview');
+      a.addEventListener('pointerenter', function () { warm(); show(src); });
+      a.addEventListener('focus', function () { show(src); });
+    });
+  }
+
+  /* 5. Local time in Eindhoven */
+  var clocks = d.querySelectorAll('[data-clock]');
+  if (clocks.length && window.Intl) {
+    var fmt = new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/Amsterdam', hour: '2-digit', minute: '2-digit' });
+    var tick = function () {
+      var now = new Date();
+      clocks.forEach(function (c) { c.textContent = fmt.format(now); });
+    };
+    tick();
+    var loop = function () { tick(); setTimeout(loop, 60000 - (Date.now() % 60000)); };
+    setTimeout(loop, 60000 - (Date.now() % 60000));
+  }
 })();

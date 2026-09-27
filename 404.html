@@ -3,24 +3,30 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Bay empty · Tony’s Hangar</title>
+<title>Page not found — Tony Jürgens</title>
 <meta name="robots" content="noindex">
-<meta name="theme-color" content="#0e1013">
+<meta name="theme-color" content="#f3f0e8">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<link rel="stylesheet" href="/styles.css">
+<link rel="preload" href="/fonts/newsreader-roman.woff" as="font" type="font/woff" crossorigin>
+<link rel="stylesheet" href="/styles.css?v=4">
 </head>
 <body>
-<main class="lost">
-  <div class="hazard" aria-hidden="true"></div>
-  <div class="lost-inner">
-    <p class="sign sign-loc">Error 404 · Bay empty</p>
-    <h1 class="lost-title">Nothing parked here.</h1>
-    <p class="lost-text">This page isn’t in the hangar — the link may be old or mistyped.</p>
-    <a class="btn btn-yellow" href="/">Taxi back to the hangar</a>
+<header class="site-head">
+  <div class="grid head-inner">
+    <a class="wordmark" href="/">Tony Jürgens</a>
+    <nav class="site-nav" aria-label="Main">
+      <a href="/#work">Work</a>
+      <a href="/#about">About</a>
+      <a href="/#contact">Contact</a>
+    </nav>
   </div>
-  <div class="hazard" aria-hidden="true"></div>
+</header>
+<main class="intro grid lost">
+  <p class="status"><span class="status-dot" aria-hidden="true"></span>Error 404</p>
+  <h1 class="intro-title">This page isn’t here.</h1>
+  <p class="intro-lead lost-lead">The link may be old or mistyped. Everything I work on is on <a href="/">the front page</a>.</p>
 </main>
 </body>
 </html>
