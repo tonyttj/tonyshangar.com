@@ -543,9 +543,11 @@ html:not(.js) .contact-time { display: none; }
 @media (max-width: 699px) {
   :root { --g: 14px; --head: 56px; }
   body { font-size: 1.0625rem; line-height: 1.55; }
-  .wordmark { grid-column: content-start / span 5; font-size: 1.125rem; }
-  .site-nav { grid-column: col 6 / content-end; justify-content: flex-end; gap: 18px; }
-  .site-nav a { font-size: .9375rem; }
+  /* phones: header as a simple flex row so the name and links never collide */
+  .head-inner { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 0 var(--m); }
+  .wordmark { flex: none; font-size: 1.0625rem; }
+  .site-nav { gap: 16px; }
+  .site-nav a { font-size: .875rem; }
 
   .status { grid-row: 1; }
   .intro-title { grid-row: 2; margin-bottom: 32px; }
